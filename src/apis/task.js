@@ -3,6 +3,8 @@ import { API_ENDPOINT } from '../constants'
 import qs from "query-string"
 const url = 'tasks';
 const urlUpdate = 'update'
+const urlDelete = 'delete'
+
 export const getList = (params = {}) => {
     let queryParams = '';
     if (Object.keys(params).length > 0) {
@@ -15,4 +17,7 @@ export const addTask = (data) => {
 }
 export const updateTask = (data, taskId) => {
     return axiosService.put(`${API_ENDPOINT}/${urlUpdate}/${taskId}`, data)
+}
+export const deleteTask = (taskId) => {
+    return axiosService.delete(`${API_ENDPOINT}/${urlDelete}/${taskId}`)
 }

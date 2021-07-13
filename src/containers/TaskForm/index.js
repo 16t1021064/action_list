@@ -43,7 +43,7 @@ class TaskForm extends Component {
         return xhtml;
     }
     render() {
-        const { classes, modalActionCreators, handleSubmit, invalid, submitting, taskEditing } = this.props;
+        const { classes, modalActionCreators, handleSubmit, invalid, submitting } = this.props;
         const { hideModal } = modalActionCreators;
 
         return (

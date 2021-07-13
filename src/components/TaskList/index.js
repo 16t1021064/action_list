@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types'
 class TaskList extends Component {
     render() {
-        const { classes, tasks, status, onClickEdit } = this.props;
+        const { classes, tasks, status, onClickEdit, onClickDelete } = this.props;
         return (
 
             <Grid item md={4} xs={12} key={status.value}>
@@ -24,6 +24,7 @@ class TaskList extends Component {
                                     status={status}
                                     key={task.id}
                                     onClickEdit={() => onClickEdit(task)}
+                                    onClickDelete={() => onClickDelete(task)}
                                 />
                             )
                         })
@@ -37,6 +38,7 @@ TaskList.propTypes = {
     classes: PropTypes.object,
     task: PropTypes.array,
     status: PropTypes.object,
-    onClickEdit: PropTypes.func
+    onClickEdit: PropTypes.func,
+    onClickDelete: PropTypes.func
 }
 export default withStyles(styles)(TaskList)

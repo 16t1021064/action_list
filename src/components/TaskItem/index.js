@@ -10,7 +10,7 @@ import Fab from '@material-ui/core/Fab';
 import PropTypes from 'prop-types'
 class TaskItem extends Component {
     render() {
-        const { classes, task, status, onClickEdit } = this.props;
+        const { classes, task, status, onClickEdit, onClickDelete } = this.props;
         const { id, title } = task;
 
         return (
@@ -25,12 +25,24 @@ class TaskItem extends Component {
                 </CardContent>
                 <p>{task.description}</p>
                 <CardActions className={classes.cardActions}>
-                    <Fab color="primary" aria-label="edit" className={classes.fab} size="small" onClick={onClickEdit}>
+                    <Fab
+                        color="primary"
+                        aria-label="edit"
+                        className={classes.fab}
+                        size="small"
+                        onClick={onClickEdit}
+                    >
                         <Icon>
                             edit
                         </Icon>
                     </Fab>
-                    <Fab color="secondary" aria-label="delete" size="small" className={classes.fab}>
+                    <Fab
+                        color="secondary"
+                        aria-label="delete"
+                        size="small"
+                        className={classes.fab}
+                        onClick={onClickDelete}
+                    >
                         <Icon>
                             delete
                         </Icon>
@@ -45,5 +57,6 @@ TaskItem.propTypes = {
     task: PropTypes.object,
     status: PropTypes.object,
     onClickEdit: PropTypes.func,
+    onClickDelete: PropTypes.func,
 }
 export default withStyles(styles)(TaskItem)

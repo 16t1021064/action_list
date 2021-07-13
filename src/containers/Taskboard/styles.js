@@ -13,6 +13,9 @@ const styles = theme => ({
         // borderColor: '#cccccc',
         // borderRadius: 4
 
+    },
+    modalConfirmTextBold: {
+        fontWeight: "700"
     }
 })
 export default styles;

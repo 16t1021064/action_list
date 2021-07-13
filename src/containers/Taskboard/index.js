@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withStyles } from '@material-ui/core';
+import { Box, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import styles from './styles';
 import AddIcon from '@material-ui/icons/Add';
@@ -59,6 +59,37 @@ class TaskBoard extends Component {
         changeModalTitle('Cập nhật công việc');
         changeModalContent(<TaskForm />)
     }
+    showModalDeleteTask = (task) => {
+        const { modalActionCreators, classes } = this.props;
+        const { showModal, changeModalTitle, changeModalContent, hideModal } = modalActionCreators;
+        showModal();
+        changeModalTitle('Xoá công việc');
+        changeModalContent(
+            <div className={classes.modalDelete}>
+                <div className={classes.modalConfirmText}>
+                    bạn có chắc chắn muốn xóa <span className={classes.modalConfirmTextBold}>{task.title}</span>?
+                </div>
+                <Box display="flex" flexDirection="row-reverse" mt={2}>
+                    <Box ml={1}>
+                        <Button variant="contained" onClick={hideModal}>
+                            Hủy bỏ
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="contained" color="primary" onClick={() => this.handleDeleteTask(task)}>
+                            Đồng ý
+                        </Button>
+                    </Box>
+                </Box>
+            </div>
+        )
+    }
+    handleDeleteTask = (task) => {
+        const { id } = task;
+        const { taskActionCreators } = this.props;
+        const { deleteTask } = taskActionCreators;
+        deleteTask(id);
+    }
     renderBoard = () => {
         const { listTask } = this.props;
         let xhtml = null;
@@ -72,6 +103,7 @@ class TaskBoard extends Component {
                             status={status}
                             key={index}
                             onClickEdit={this.handleEditTask}
+                            onClickDelete={this.showModalDeleteTask}
                         />
                     })
                 }
@@ -113,6 +145,7 @@ TaskBoard.propTypes = {
         fetchListTaskRequest: PropTypes.func,
         filterTask: PropTypes.func,
         setTaskEditing: PropTypes.func,
+        deleteTask: PropTypes.func,
     }),
     modalActionCreators: PropTypes.shape({
         showModal: PropTypes.func,

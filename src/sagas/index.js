@@ -1,8 +1,8 @@
 import { fork, take, call, put, delay, select, takeLatest, takeEvery } from 'redux-saga/effects'
 import * as taskTypes from '../constants/task'
-import { addTask, getList, updateTask } from '../apis/task'
+import { addTask, deleteTask, getList, updateTask } from '../apis/task'
 import { STATUS_CODE, STATUSES } from '../constants/'
-import { fetchListTaskSuccess, fetchListTaskFailed, addTaskSuccess, addTaskFailed, fetchListTask, updateTaskSuccess, updateTaskFailed } from '../actions/task'
+import { fetchListTaskSuccess, fetchListTaskFailed, addTaskSuccess, addTaskFailed, fetchListTask, updateTaskSuccess, updateTaskFailed, deleteTaskSuccess, deleteTaskFailed } from '../actions/task'
 import { showLoading, hideLoading } from '../actions/ui'
 import { hideModal } from '../actions/modal'
 function* fetchListTaskAction() {
@@ -48,7 +48,6 @@ function* updateTaskSaga({ payload }) {
     yield put(showLoading());
     const resp = yield call(updateTask, { title, description, status }, taskEditing.id)
     const { data, status: statusCode } = resp;
-    console.log(statusCode);
     if (statusCode === STATUS_CODE.SUCCESS) {
         yield put(updateTaskSuccess(data))
         yield put(hideModal())
@@ -58,10 +57,25 @@ function* updateTaskSaga({ payload }) {
     yield delay(500);
     yield put(hideLoading());
 }
+function* deleteTaskSaga({ payload }) {
+    const { id } = payload;
+    yield put(showLoading());
+    const resp = yield call(deleteTask, id)
+    const { data, status: statusCode } = resp;
+    if (statusCode === STATUS_CODE.SUCCESS) {
+        yield put(deleteTaskSuccess(data))
+        yield put(hideModal())
+    } else {
+        yield put(deleteTaskFailed(data))
+    }
+    yield delay(500);
+    yield put(hideLoading());
+}
 function* rootSaga() {
     yield fork(fetchListTaskAction);
     yield takeLatest(taskTypes.FILTER_TASK, filterTaskSaga)
     yield takeEvery(taskTypes.ADD_TASK, addTaskSaga)
     yield takeLatest(taskTypes.UPDATE_TASK, updateTaskSaga)
+    yield takeLatest(taskTypes.DELETE_TASK, deleteTaskSaga)
 }
 export default rootSaga;
