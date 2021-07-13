@@ -4,7 +4,8 @@ const theme = createMuiTheme({
     color: {
         primary: '#D32F2F',
         secondary: '#00BCD4',
-        error: '#757575'
+        error: '#757575',
+        textColor: '#FFFFFF'
     },
     typography: {
         fontFamily: 'Roboto'

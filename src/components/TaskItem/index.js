@@ -7,9 +7,10 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
+import PropTypes from 'prop-types'
 class TaskItem extends Component {
     render() {
-        const { classes, task, status } = this.props;
+        const { classes, task, status, onClickEdit } = this.props;
         const { id, title } = task;
 
         return (
@@ -24,7 +25,7 @@ class TaskItem extends Component {
                 </CardContent>
                 <p>{task.description}</p>
                 <CardActions className={classes.cardActions}>
-                    <Fab color="primary" aria-label="edit" className={classes.fab} size="small">
+                    <Fab color="primary" aria-label="edit" className={classes.fab} size="small" onClick={onClickEdit}>
                         <Icon>
                             edit
                         </Icon>
@@ -38,5 +39,11 @@ class TaskItem extends Component {
             </Card>
         )
     }
+}
+TaskItem.propTypes = {
+    classes: PropTypes.object,
+    task: PropTypes.object,
+    status: PropTypes.object,
+    onClickEdit: PropTypes.func,
 }
 export default withStyles(styles)(TaskItem)
