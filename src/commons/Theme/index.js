@@ -5,7 +5,9 @@ const theme = createMuiTheme({
         primary: '#D32F2F',
         secondary: '#00BCD4',
         error: '#757575',
-        textColor: '#FFFFFF'
+        textColor: '#FFFFFF',
+        defaultTextColor: '#000000',
+        hover: 'rgba(0,0,0,0.08)'
     },
     typography: {
         fontFamily: 'Roboto'
